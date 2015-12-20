@@ -20,10 +20,13 @@ export class Repo extends React.Component {
   }
 
   render() {
+    let data = this.props.data;
+
     return (
       <div className='repo'>
-        <h2><b>{this.props.name}</b></h2>
-        <IssueList issues={this.props.issues} />
+        <h2><b>{data.name}</b></h2>
+        <div className='repo-desc'>{data.desc}</div>
+        <IssueList issues={data.issues} />
       </div>
     );
   }

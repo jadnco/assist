@@ -15,7 +15,7 @@ export class IssueList extends React.Component {
     return (
       <ul>
         {issues.map(issue => {
-          return <Issue key={issue.id} title={issue.title} />;
+          return <Issue key={issue.id} data={issue} />;
         })}
       </ul>
     );

@@ -16,10 +16,12 @@ export class Issue extends React.Component {
   }
 
   render() {
+    let data = this.props.data;
+
     return (
       <div className='issue'>
-        <h2 className='issue-title'>{this.props.title}</h2>
-        <div className='issue-info'>Opened on {this.props.date} by {this.props.creator}</div>
+        <h2 className='issue-title'>{data.title}</h2>
+        <div className='issue-info'>Opened on {data.date} by {data.creator}</div>
       </div>
     );
   }

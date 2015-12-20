@@ -15,7 +15,7 @@ export class RepoList extends React.Component {
     return (
       <ul>
         {repos.map(repo => {
-          return <Repo key={repo.id} name={repo.name} issues={repo.issues} />;
+          return <Repo key={repo.id} data={repo} />;
         })}
       </ul>
     );
