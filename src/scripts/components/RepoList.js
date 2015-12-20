@@ -1,5 +1,7 @@
 import React from 'react';
 
+import {Repo} from './Repo';
+
 export class RepoList extends React.Component {
   constructor(props) {
     super(props);
@@ -8,7 +10,15 @@ export class RepoList extends React.Component {
   }
 
   render() {
-    return;
+    let repos = this.props.repos;
+
+    return (
+      <ul>
+        {repos.map(repo => {
+          return <Repo key={repo.id} name={repo.name} issues={repo.issues} />;
+        })}
+      </ul>
+    );
   }
 
 }
