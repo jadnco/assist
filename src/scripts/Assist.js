@@ -3,6 +3,7 @@
  * This code is licensed under MIT license (see LICENSE for details)
  */
 
+// React
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -15,40 +16,71 @@ import {IssueList} from './components/IssueList';
 import {Repo} from './components/Repo';
 import {RepoList} from './components/RepoList';
 
+import {get} from './functions';
+
 class Assist extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      repos: [
-        {
-          id: 1,
-          name: 'Cool repo one',
-          desc: 'This is the repo description. It is nothing but some text',
-          issues: [
-            {id: 1, title: 'this is issue #195', creator: 'Jaden Dessureault'},
-            {id: 2, title: 'Some other issue'},
-          ],
-        },
-        {
-          id: 2,
-          name: 'Yo another repo',
-          desc: 'Another cool repo that does very cool things',
-          issues: [
-            {id: 1, title: 'Some very interesting issue'},
-            {id: 2, title: 'Someone help this issue out'},
-          ],
-        },
-      ],
+      username: null,
+      loading: false,
+      ready: false,
+      repos: [],
     };
   }
 
+  submitUsername(event) {
+    let username = event.target.username.value.trim();
+
+    event.preventDefault();
+
+    // TODO: validation
+
+    this.setState({username: username}, () => this.getRepos());
+  }
+
+  getRepos() {
+    !this.state.loading && this.setState({loading: true});
+
+    get(`/users/${this.state.username}/starred`, res => {
+      this.setState({loading: true, ready: false, repos: res}, () => this.getIssues());
+    });
+  }
+
+  getIssues() {
+    let repos = this.state.repos;
+
+    !this.state.loading && this.setState({loading: true});
+
+    repos.map((repo, i) => {
+
+      //Get the issues of each repo
+      get(`/repos/${repo.full_name}/issues`, res => {
+        repo.issues.push(res);
+
+        // Modify the state when we get to the last repo
+        if (i === repos.length - 1) {
+          console.log('All the repos', repos);
+
+          // TODO: Update state
+
+          //this.setState({loading: false, ready: true, repos: repos});
+        }
+      });
+    });
+  }
+
   render() {
-    return (
-      <div>
-        <RepoList repos={this.state.repos} />
-      </div>
-    );
+    let content = <UsernameInput onSubmit={this.submitUsername.bind(this)} />;
+
+    if (this.state.loading) {
+      content = <div>Loading...</div>;
+    } else if (this.state.ready) {
+      content = <RepoList repos={this.state.repos} />;
+    }
+
+    return content;
   }
 }
 

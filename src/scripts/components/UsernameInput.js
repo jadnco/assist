@@ -9,16 +9,10 @@ export class UsernameInput extends React.Component {
     };
   }
 
-  submit(event) {
-    event.preventDefault();
-    console.log(event.target);
-  }
-
   render() {
-    console.log(this);
     return (
-      <form id='start-form' onSubmit={this.submit}>
-        <input type='text' className='username-input' placeholder={this.state.placeholder} />
+      <form id='start-form' onSubmit={this.props.onSubmit}>
+        <input type='text' className='username-input' name='username' placeholder={this.state.placeholder} />
         <input type='submit' />
       </form>
     );
