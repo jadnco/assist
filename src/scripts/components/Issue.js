@@ -17,11 +17,16 @@ export class Issue extends React.Component {
 
   render() {
     let data = this.props.data;
+    let labels = data.labels;
 
     return (
       <div className='issue'>
         <h2 className='issue-title'>{data.title}</h2>
-        <div className='issue-info'>Opened on {data.date} by {data.creator}</div>
+        <div className='issue-info'>Opened on {data.created_at} by {data.user.login}</div>
+
+        {labels.map(label => {
+          return <div color={'#' + label.color}>{label.name}</div>;
+        })}
       </div>
     );
   }

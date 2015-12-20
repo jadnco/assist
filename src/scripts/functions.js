@@ -8,6 +8,7 @@ export function get(url, callback, json = true) {
 
   req.onreadystatechange = function() {
     if (req.readyState === 4 && req.status === 200) {
+
       // Convert response into object
       res = json && JSON.parse(req.responseText) || req.responseText;
 

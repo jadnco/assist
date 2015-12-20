@@ -22,6 +22,12 @@ class Assist extends React.Component {
   constructor(props) {
     super(props);
 
+    this.labels = [
+      'help wanted',
+      // 'help-wanted',
+      // 'fix wanted',
+    ].join(',');
+
     this.state = {
       username: null,
       loading: false,
@@ -50,25 +56,30 @@ class Assist extends React.Component {
 
   getIssues() {
     let repos = this.state.repos;
+    let length = repos.length;
 
     !this.state.loading && this.setState({loading: true});
 
     repos.map((repo, i) => {
 
-      //Get the issues of each repo
-      get(`/repos/${repo.full_name}/issues`, res => {
-        repo.issues.push(res);
+      // Get the issues of each repo
+      get(`/repos/${repo.full_name}/issues?labels=${this.labels}`, res => {
+        repo.issues = res;
 
         // Modify the state when we get to the last repo
-        if (i === repos.length - 1) {
-          console.log('All the repos', repos);
+        if (i === length - 1) {
 
-          // TODO: Update state
+          // Don't need the repos without issues
+          repos = repos.filter(this.hasIssues);
 
-          //this.setState({loading: false, ready: true, repos: repos});
+          this.setState({loading: false, ready: true, repos: repos});
         }
       });
     });
+  }
+
+  hasIssues(repo) {
+    return repo.issues && repo.issues.length > 0;
   }
 
   render() {
@@ -77,6 +88,7 @@ class Assist extends React.Component {
     if (this.state.loading) {
       content = <div>Loading...</div>;
     } else if (this.state.ready) {
+      console.log("REPOS", this.state.repos);
       content = <RepoList repos={this.state.repos} />;
     }
 
