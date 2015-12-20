@@ -8,6 +8,10 @@ import ReactDOM from 'react-dom';
 
 // Components
 import {UsernameInput} from './components/UsernameInput';
+
+import {Issue} from './components/Issue';
+import {IssueList} from './components/IssueList';
+
 import {Repo} from './components/Repo';
 import {RepoList} from './components/RepoList';
 
