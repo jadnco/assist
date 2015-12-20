@@ -1,24 +1,25 @@
 {
-  "name": "boilerplate",
+  "name": "assist",
   "version": "0.0.1",
   "description": "",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jadnco/boilerplate.git"
+    "url": "https://github.com/jadnco/assist.git"
   },
   "author": "Jaden Dessureault <hello@jaden.io>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jadnco/boilerplate/issues"
+    "url": "https://github.com/jadnco/assist/issues"
   },
-  "homepage": "https://github.com/jadnco/boilerplate",
+  "homepage": "https://github.com/jadnco/assist",
   "devDependencies": {
     "babel-preset-es2015": "^6.1.18",
+    "babel-preset-react": "^6.3.13",
+    "babelify": "^7.2.0",
+    "browserify": "^12.0.1",
     "browser-sync": "^2.7.1",
-    "del": "^1.2.0",
     "gulp": "^3.8.11",
     "gulp-autoprefixer": "^2.2.0",
-    "gulp-babel": "^6.1.0",
     "gulp-compile-handlebars": "^0.5.0",
     "gulp-concat": "^2.5.2",
     "gulp-gh-pages": "^0.5.2",
@@ -27,6 +28,11 @@
     "gulp-sass-bulk-import": "^0.3.1",
     "gulp-uglify": "^1.2.0",
     "gulp-util": "^3.0.4",
-    "gulp-watch": "^4.3.5"
+    "gulp-watch": "^4.3.5",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "dependencies": {
+    "react": "^0.14.3",
+    "react-dom": "^0.14.3"
   }
 }

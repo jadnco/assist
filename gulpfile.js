@@ -1,7 +1,6 @@
 'use strict';
 
 const gulp        = require('gulp');
-const del         = require('del');
 const util        = require('gulp-util');
 const sass        = require('gulp-sass');
 const prefixer    = require('gulp-autoprefixer');
@@ -14,6 +13,8 @@ const ghPages     = require('gulp-gh-pages');
 const sassGlob    = require('gulp-sass-bulk-import');
 const watch       = require('gulp-watch');
 const babel       = require('gulp-babel');
+const browserify  = require('browserify');
+const source      = require('vinyl-source-stream');
 
 var paths = {
   src: { root: 'src' },
@@ -21,6 +22,7 @@ var paths = {
   init: function() {
     this.src.sass        = `${this.src.root}/scss/main.scss`;
     this.src.js          = `${this.src.root}/scripts/**/*.js`;
+    this.src.assist      = `${this.src.root}/scripts/Assist.js`;
     this.src.images      = `${this.src.root}/images/**/*.{jpg,jpeg,svg,png,gif}`;
     this.src.files       = `${this.src.root}/*.{html,txt}`;
 
@@ -61,11 +63,16 @@ gulp.task('styles', () => {
 * Bundle all javascript files
 */
 gulp.task('scripts', () => {
-  gulp.src(paths.src.js)
-    .pipe(babel({
-      presets: ['es2015'],
-    }))
-    .on('error', util.log)
+  return browserify(paths.src.assist)
+    .transform('babelify', {
+      presets: ['es2015', 'react'],
+    })
+    .bundle()
+    .on('error', function(err) {
+      util.log(err);
+      this.emit('end');
+    })
+    .pipe(source('bundle.js'))
     .pipe(gulp.dest(paths.dist.javascript))
     .pipe(browserSync.reload({stream: true}));
 });
@@ -77,7 +84,8 @@ gulp.task('images', () => {
 
 gulp.task('files', () => {
   gulp.src([paths.src.files])
-    .pipe(gulp.dest(paths.dist.root));
+    .pipe(gulp.dest(paths.dist.root))
+    .pipe(browserSync.reload({stream: true}));
 });
 
 watch(paths.src.images, () => {
