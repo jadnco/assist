@@ -15,8 +15,9 @@ const watch       = require('gulp-watch');
 const babel       = require('gulp-babel');
 const browserify  = require('browserify');
 const source      = require('vinyl-source-stream');
+const watchify    = require('watchify');
 
-var paths = {
+let paths = {
   src: { root: 'src' },
   dist: { root: 'dist' },
   init: function() {
@@ -33,6 +34,32 @@ var paths = {
     return this;
   },
 }.init();
+
+let bundler = watchify(browserify(paths.src.assist, watchify.args));
+
+const bundle = () => {
+  bundler.transform('babelify', {
+    presets: ['es2015', 'react'],
+  });
+
+  return bundler
+    .bundle()
+    .on('error', function(err) {
+      util.log(err);
+      this.emit('end');
+    })
+    .pipe(source('bundle.js'))
+    .pipe(gulp.dest(paths.dist.javascript))
+    .pipe(browserSync.reload({stream: true}));
+};
+
+bundler.on('update', bundle);
+bundler.on('log', util.log);
+
+/*
+* Bundle all javascript files
+*/
+gulp.task('scripts', bundle);
 
 gulp.task('serve', () => {
   browserSync.init({
@@ -59,24 +86,6 @@ gulp.task('styles', () => {
     .pipe(browserSync.reload({stream: true}));
 });
 
-/*
-* Bundle all javascript files
-*/
-gulp.task('scripts', () => {
-  return browserify(paths.src.assist)
-    .transform('babelify', {
-      presets: ['es2015', 'react'],
-    })
-    .bundle()
-    .on('error', function(err) {
-      util.log(err);
-      this.emit('end');
-    })
-    .pipe(source('bundle.js'))
-    .pipe(gulp.dest(paths.dist.javascript))
-    .pipe(browserSync.reload({stream: true}));
-});
-
 gulp.task('images', () => {
   gulp.src([paths.src.images])
     .pipe(gulp.dest(paths.dist.images));
@@ -96,13 +105,8 @@ watch(paths.src.files, () => {
   gulp.start('files');
 });
 
-watch(paths.src.js, () => {
-  gulp.start('scripts');
-});
-
 gulp.task('watch', () => {
   gulp.watch('src/scss/**/*.scss', ['styles']);
-  gulp.watch(paths.src.js, ['scripts']);
 });
 
 gulp.task('deploy', () => {

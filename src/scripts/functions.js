@@ -4,8 +4,6 @@ export function get(url, callback, json = true) {
 
   url = 'https://api.github.com' + url;
 
-  console.log('sent request to ', url);
-
   req.onreadystatechange = function() {
     if (req.readyState === 4 && req.status === 200) {
 
