@@ -35,12 +35,19 @@ let paths = {
   },
 }.init();
 
-let bundler = watchify(browserify(paths.src.assist, watchify.args));
+let bundler = watchify(
+  browserify({
+    entries: [paths.src.assist],
+    cache: {},
+    packageCache: {},
+    fullPaths: true,
+  }).transform('babelify', {
+    presets: ['es2015', 'react'],
+  })
+);
 
 const bundle = () => {
-  bundler.transform('babelify', {
-    presets: ['es2015', 'react'],
-  });
+  console.log('BUNDLE CALLED');
 
   return bundler
     .bundle()

@@ -49,7 +49,13 @@ class Assist extends React.Component {
   getRepos() {
     !this.state.loading && this.setState({loading: true});
 
-    get(`/users/${this.state.username}/starred`, res => {
+    get(`/users/${this.state.username}/starred?per_page=100`, (res, err) => {
+
+      // Rate limit reached
+      if (err && err === 403) {
+        return console.log('rate limit reached');
+      }
+
       this.setState({loading: true, ready: false, repos: res}, () => this.getIssues());
     });
   }
@@ -63,7 +69,13 @@ class Assist extends React.Component {
     repos.map((repo, i) => {
 
       // Get the issues of each repo
-      get(`/repos/${repo.full_name}/issues?labels=${this.labels}`, res => {
+      get(`/repos/${repo.full_name}/issues?labels=${this.labels}`, (res, err) => {
+
+        // Rate limit reached
+        if (err && err === 403) {
+          return console.log('rate limit reached');
+        }
+
         repo.issues = res;
 
         // Modify the state when we get to the last repo

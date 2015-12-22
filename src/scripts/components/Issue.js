@@ -21,7 +21,7 @@ export class Issue extends React.Component {
 
     return (
       <div className='issue'>
-        <h2 className='issue-title'>{data.title}</h2>
+        <h3>{data.title}</h3>
         <div className='issue-info'>Opened on {data.created_at} by {data.user.login}</div>
 
         {labels.map(label => {

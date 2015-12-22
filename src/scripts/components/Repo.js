@@ -24,8 +24,8 @@ export class Repo extends React.Component {
 
     return (
       <div className='repo'>
-        <h2><b>{data.name}</b></h2>
-        <div className='repo-desc'>{data.desc}</div>
+        <h2><b>{data.full_name}</b></h2>
+        <div className='repo-desc'>{data.description}</div>
 
         <IssueList issues={data.issues} />
       </div>

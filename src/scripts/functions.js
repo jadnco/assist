@@ -1,16 +1,22 @@
 export function get(url, callback, json = true) {
   let req = new XMLHttpRequest();
   let res;
+  let err;
 
   url = 'https://api.github.com' + url;
 
   req.onreadystatechange = function() {
-    if (req.readyState === 4 && req.status === 200) {
+    if (req.readyState === 4) {
 
-      // Convert response into object
-      res = json && JSON.parse(req.responseText) || req.responseText;
+      // Response is good
+      if (req.status === 200) {
+        // Convert response into object
+        res = json && JSON.parse(req.responseText) || req.responseText;
+      } else {
+        err = req.status;
+      }
 
-      return callback(res);
+      return callback(res, err);
     }
   };
 
@@ -19,3 +25,5 @@ export function get(url, callback, json = true) {
 
   req.send(null);
 };
+
+export function formatDate(date) {}
