@@ -10,6 +10,8 @@
 
 import React from 'react';
 
+import {LabelList} from './LabelList';
+
 export class Issue extends React.Component {
   constructor(props) {
     super(props);
@@ -17,16 +19,12 @@ export class Issue extends React.Component {
 
   render() {
     let data = this.props.data;
-    let labels = data.labels;
 
     return (
       <div className='issue'>
-        <h3>{data.title}</h3>
+        <h3><a href={data.url}>{data.title}</a></h3>
         <div className='issue-info'>Opened on {data.created_at} by {data.user.login}</div>
-
-        {labels.map(label => {
-          return <div color={'#' + label.color}>{label.name}</div>;
-        })}
+        <LabelList labels={data.labels} />
       </div>
     );
   }

@@ -8,7 +8,7 @@ export class IssueList extends React.Component {
   }
 
   render() {
-    let issues = this.props.issues;
+    let issues = this.props.issues || [];
 
     return (
       <ul>

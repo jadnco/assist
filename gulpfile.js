@@ -25,7 +25,7 @@ let paths = {
     this.src.js          = `${this.src.root}/scripts/**/*.js`;
     this.src.assist      = `${this.src.root}/scripts/Assist.js`;
     this.src.images      = `${this.src.root}/images/**/*.{jpg,jpeg,svg,png,gif}`;
-    this.src.files       = `${this.src.root}/*.{html,txt}`;
+    this.src.files       = `${this.src.root}/*.{html,txt,json}`;
 
     this.dist.css        = `${this.dist.root}/css`;
     this.dist.images     = `${this.dist.root}/images`;

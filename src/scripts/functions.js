@@ -5,6 +5,8 @@ export function get(url, callback, json = true) {
 
   url = 'https://api.github.com' + url;
 
+  url = './_data.json';
+
   req.onreadystatechange = function() {
     if (req.readyState === 4) {
 

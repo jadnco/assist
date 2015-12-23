@@ -32,6 +32,7 @@ class Assist extends React.Component {
       username: null,
       loading: false,
       ready: false,
+      limited: false,
       repos: [],
     };
   }
@@ -47,16 +48,17 @@ class Assist extends React.Component {
   }
 
   getRepos() {
-    !this.state.loading && this.setState({loading: true});
-
     get(`/users/${this.state.username}/starred?per_page=100`, (res, err) => {
 
       // Rate limit reached
       if (err && err === 403) {
+        this.setState({limited: true});
+
         return console.log('rate limit reached');
       }
 
-      this.setState({loading: true, ready: false, repos: res}, () => this.getIssues());
+      //this.setState({ready: false, repos: res}, () => this.getIssues());
+      this.setState({ready: true, repos: res});
     });
   }
 
@@ -64,29 +66,34 @@ class Assist extends React.Component {
     let repos = this.state.repos;
     let length = repos.length;
 
-    !this.state.loading && this.setState({loading: true});
-
     repos.map((repo, i) => {
 
-      // Get the issues of each repo
-      get(`/repos/${repo.full_name}/issues?labels=${this.labels}`, (res, err) => {
+      // Don't send a request if there are no issues
+      if (repo.open_issues_count > 0) {
 
-        // Rate limit reached
-        if (err && err === 403) {
-          return console.log('rate limit reached');
+        if (!this.state.limited) {
+
+          // Get the issues of each repo
+          get(`/repos/${repo.full_name}/issues?labels=${this.labels}`, (res, err) => {
+
+            // Rate limit reached
+            if (err && err === 403) {
+              this.setState({limited: true, ready: true});
+
+              return console.log('rate limit reached');
+            }
+
+            repo.issues = res;
+
+            // Modify the state when we get to the last repo
+            if (i === length - 1) {
+              repos = repos.filter(this.hasIssues);
+
+              this.setState({ready: true, repos: repos});
+            }
+          });
         }
-
-        repo.issues = res;
-
-        // Modify the state when we get to the last repo
-        if (i === length - 1) {
-
-          // Don't need the repos without issues
-          repos = repos.filter(this.hasIssues);
-
-          this.setState({loading: false, ready: true, repos: repos});
-        }
-      });
+      }
     });
   }
 
@@ -98,9 +105,10 @@ class Assist extends React.Component {
     let content = <UsernameInput onSubmit={this.submitUsername.bind(this)} />;
 
     if (this.state.loading) {
-      content = <div>Loading...</div>;
+      content = <div>Loading</div>;
     } else if (this.state.ready) {
-      console.log("REPOS", this.state.repos);
+
+      document.body.appendChild(document.createElement('pre')).innerHTML = JSON.stringify(this.state.repos, null, 2);
       content = <RepoList repos={this.state.repos} />;
     }
 

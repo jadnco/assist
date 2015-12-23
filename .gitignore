@@ -5,7 +5,5 @@ dist/*
 .publish
 *.log
 
-*.hbs
-partials/*
-!src/**/*.hbs
-assets/*
+src/_data.json
+src/data.json
