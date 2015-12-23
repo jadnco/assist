@@ -18,7 +18,7 @@ import {RepoList} from './components/RepoList';
 
 import {get} from './functions';
 
-class Assist extends React.Component {
+export class Assist extends React.Component {
   constructor(props) {
     super(props);
 
@@ -48,7 +48,7 @@ class Assist extends React.Component {
   }
 
   getRepos() {
-    get(`/users/${this.state.username}/starred?per_page=100`, (res, err) => {
+    get(`/users/${this.state.username}/starred?per_page=20`, (res, err) => {
 
       // Rate limit reached
       if (err && err === 403) {
@@ -57,8 +57,8 @@ class Assist extends React.Component {
         return console.log('rate limit reached');
       }
 
-      //this.setState({ready: false, repos: res}, () => this.getIssues());
-      this.setState({ready: true, repos: res});
+      this.setState({ready: false, repos: res}, () => this.getIssues());
+      //this.setState({ready: true, repos: res});
     });
   }
 
@@ -98,7 +98,7 @@ class Assist extends React.Component {
   }
 
   hasIssues(repo) {
-    return repo.issues && repo.issues.length > 0;
+    return !!repo.issues && repo.issues.length > 0;
   }
 
   render() {
@@ -107,8 +107,6 @@ class Assist extends React.Component {
     if (this.state.loading) {
       content = <div>Loading</div>;
     } else if (this.state.ready) {
-
-      document.body.appendChild(document.createElement('pre')).innerHTML = JSON.stringify(this.state.repos, null, 2);
       content = <RepoList repos={this.state.repos} />;
     }
 

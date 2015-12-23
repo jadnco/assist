@@ -22,7 +22,7 @@ export class Issue extends React.Component {
 
     return (
       <div className='issue'>
-        <h3><a href={data.url}>{data.title}</a></h3>
+        <h3><a href={data.html_url} target='_blank'>{data.title}</a></h3>
         <div className='issue-info'>Opened on {data.created_at} by {data.user.login}</div>
         <LabelList labels={data.labels} />
       </div>

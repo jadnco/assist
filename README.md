@@ -4,7 +4,19 @@
 
 For simple ES6 projects
 
-## Getting Started
+### Installation
+
+Install using npm:
+
+```sh
+npm install
+```
+
+### Testing
+
+```sh
+npm test
+```
 
 ...
 
@@ -18,14 +30,14 @@ For simple ES6 projects
 var x = 0;
 ```
 
-## Options
+### Options
 
 ...
 
-## Demo
+### Demo
 
 To see a working demo, head over to [link](#)
 
-## License
+### License
 
 MIT © Jaden Dessureault. See [LICENSE](LICENSE) for details.
