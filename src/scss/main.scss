@@ -32,7 +32,7 @@ body {
 
 #container {
   width: 88%;
-  max-width: 680px;
+  max-width: 768px;
   margin: 0 auto;
 }
 
@@ -64,6 +64,10 @@ a {
   &:hover {
     text-decoration: underline;
   }
+}
+
+ul {
+  list-style: none;
 }
 
 #start-form {
@@ -142,6 +146,8 @@ a {
 
   .issue-label {
     display: inline-block;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
 
     &:not(:first-of-type) {
       margin-left: $p-x-small;

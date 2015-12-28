@@ -28,4 +28,12 @@ export function get(url, callback, json = true) {
   req.send(null);
 };
 
-export function formatDate(date) {}
+export function formatDate(date) {
+  return new Date(date).toLocaleString('en-us', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+}

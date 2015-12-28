@@ -18,5 +18,4 @@ export class RepoList extends React.Component {
       </ul>
     );
   }
-
 }

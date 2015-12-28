@@ -1,13 +1,3 @@
-/**
- * Issue properties:
- * - Issue name/title
- * - Labels
- * - Comment count
- * - Creator
- * - Open date
- * - Link
- */
-
 import React from 'react';
 
 export class Label extends React.Component {
@@ -19,8 +9,7 @@ export class Label extends React.Component {
     let data = this.props.data;
 
     return (
-      <li className='issue-label' style={{borderBottom: '2px solid #' + data.color}}>{data.name}</li>
+      <li className='issue-label' style={{borderColor: '#' + data.color}}>{data.name}</li>
     );
   }
-
 }
