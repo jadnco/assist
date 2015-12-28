@@ -19,7 +19,7 @@ export class Label extends React.Component {
     let data = this.props.data;
 
     return (
-      <div className='issue-label' style={{borderBottom: '2px solid #' + data.color}}>{data.name}</div>
+      <li className='issue-label' style={{borderBottom: '2px solid #' + data.color}}>{data.name}</li>
     );
   }
 
