@@ -1,5 +1,7 @@
 # Assist
 
+[![Build Status](https://travis-ci.org/jadnco/assist.svg)](https://travis-ci.org/jadnco/assist)
+
 Assist is a [React](https://facebook.github.io/react/) app that helps you find open-source projects to contribute to by searching your starred repos for any issues with the *help wanted* label.
 
 ### Installation
