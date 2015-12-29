@@ -7,3 +7,6 @@ dist/*
 
 src/_data.json
 src/data.json
+
+dist/_data.json
+dist/data.json

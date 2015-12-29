@@ -33,6 +33,7 @@ export class Assist extends React.Component {
       loading: false,
       ready: false,
       limited: false,
+      error: null,
       repos: [],
     };
   }
@@ -42,7 +43,12 @@ export class Assist extends React.Component {
 
     event.preventDefault();
 
-    // TODO: validation
+    if (!username.length) {
+      this.setState({error: 'Please type in a username.'});
+
+      return;
+    }
+
     this.setState({username: username}, () => this.getRepos());
   }
 
@@ -51,13 +57,12 @@ export class Assist extends React.Component {
 
       // Rate limit reached
       if (err && err === 403) {
-        this.setState({limited: true});
+        this.setState({limited: true, error: 'Rate limit reached.'});
 
-        return console.log('rate limit reached');
+        return;
       }
 
-      //this.setState({ready: false, repos: res}, () => this.getIssues());
-      this.setState({ready: true, repos: res});
+      this.setState({ready: false, repos: res}, () => this.getIssues());
     });
   }
 
@@ -77,9 +82,9 @@ export class Assist extends React.Component {
 
             // Rate limit reached
             if (err && err === 403) {
-              this.setState({limited: true, ready: true});
+              this.setState({limited: true, error: 'Rate limit reached.'});
 
-              return console.log('rate limit reached');
+              return;
             }
 
             repo.issues = res;
@@ -101,15 +106,11 @@ export class Assist extends React.Component {
   }
 
   render() {
-    let content = <UsernameInput onSubmit={this.submitUsername.bind(this)} />;
+    let error = this.state.error;
+    let loading = this.state.loading;
+    let content = <UsernameInput error={error} loading={loading} onSubmit={this.submitUsername.bind(this)} />;
 
-    if (this.state.loading) {
-      content = <div>Loading</div>;
-    } else if (this.state.ready) {
-
-      
-     //document.write('<pre>' + JSON.stringify(this.state.repos, null, 2) + '</pre>');
-      
+    if (this.state.ready) {
       content = <RepoList repos={this.state.repos} />;
     }
 

@@ -3,9 +3,7 @@ export function get(url, callback, json = true) {
   let res;
   let err;
 
-  //url = 'https://api.github.com' + url;
-
-  url = './_data.json';
+  url = 'https://api.github.com' + url;
 
   req.onreadystatechange = function() {
     if (req.readyState === 4) {

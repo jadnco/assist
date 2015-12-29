@@ -23,7 +23,7 @@ body {
 body {
   font: 16px/1.4 -apple-system, sans-serif;
   color: $c-dark;
-  background: #E4ECEC;
+  background: $c-light-grey;
 }
 
 ::selection {
@@ -73,22 +73,25 @@ ul {
 #start-form {
   width: 92%;
   max-width: 400px;
-  margin-left: 4rem;
-  margin-top: 4rem;
+  margin: 45% auto 0 auto;
   position: relative;
-  display: inline-block;
 
   .username-input {
     width: 100%;
-    border: 1px solid $c-light-grey;
   }
 
   input[type=submit] {
+    float: right;
     position: absolute;
-    right: 1rem;
-    bottom: -1rem;
-    background: $c-red;
+    top: 0;
+    right: 0;
     cursor: pointer;
+    background: $c-red;
+  }
+
+  .form-info {
+    margin-top: $p-x-small;
+    text-align: center;
   }
 }
 
