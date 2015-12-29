@@ -8,7 +8,7 @@ export class RepoList extends React.Component {
   }
 
   render() {
-    let repos = this.props.repos;
+    let repos = this.props.repos || [];
 
     return (
       <ul>

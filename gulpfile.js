@@ -47,8 +47,6 @@ let bundler = watchify(
 );
 
 const bundle = () => {
-  console.log('BUNDLE CALLED');
-
   return bundler
     .bundle()
     .on('error', function(err) {
