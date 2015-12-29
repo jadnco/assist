@@ -40,7 +40,7 @@ To see a working demo, head over to [jaden.io/assist](http://jaden.io/assist). T
 
 ### Issues
 
-GitHub limits API responses to 100 records, so some repos might now get displayed.
+GitHub limits API responses to 100 records, so some repos might not get displayed.
 
 ### License
 
