@@ -38,7 +38,7 @@ npm test
 
 ### Demo
 
-To see a working demo, head over to [jaden.io/assist](http://jaden.io/assist). The demo will most likely not work because of the GitHub API rate limits.
+To see a working demo, head over to [jaden.io/assist](http://jaden.io/assist). The demo will most likely not work because of the GitHub API rate limits, it should be ran locally by following the above steps.
 
 ### Issues
 
