@@ -73,8 +73,11 @@ ul {
 #start-form {
   width: 92%;
   max-width: 400px;
-  margin: 45% auto 0 auto;
-  position: relative;
+  margin: 0 auto;
+  position: absolute;
+  top: 45%;
+  left: 0;
+  right: 0;
 
   .username-input {
     width: 100%;
