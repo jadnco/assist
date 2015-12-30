@@ -18,7 +18,7 @@ import {RepoList} from './components/RepoList';
 
 import {get} from './functions';
 
-export class Assist extends React.Component {
+class Assist extends React.Component {
   constructor(props) {
     super(props);
 
